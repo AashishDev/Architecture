@@ -7,29 +7,53 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ListViewModeldelegate {
 
-  @IBOutlet var ListTable: UITableView!
+  @IBOutlet var listTable: UITableView!
   private let tableDataSource = ListTableDataSource()
   var tableDataArray:NSMutableArray = []
+  
+  //ViewModel Intialization
+  var listViewModel: ListViewModel!
   
   override func viewDidLoad() {
     
     super.viewDidLoad()
-    configureListingTable()
+    
+    listViewModel = ListViewModel()
+    listViewModel.listViewModelDelegate = self
+    listViewModel.getUserList()
   }
   
   //MARK: Table Configuration Method **********************
   func configureListingTable(){
     
-    ListTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    ListTable.dataSource = tableDataSource
-    ListTable.delegate = tableDataSource
-    ListTable.reloadData()
+    listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    tableDataSource.listViewModel = listViewModel
+    listTable.dataSource = tableDataSource
+    listTable.delegate = tableDataSource
   }
   
   
+  //2 ListViewModel Delegate Method
+  func sendResponse(responseObject:JSON) {
+
+    if listViewModel.getCountOfUserList() > 0 {
+     
+      configureListingTable()
+      DispatchQueue.main.async {
+        self.listTable.reloadData()
+      }
+      
+    }
+  }
+  
+  func sendError(errorMessage:NSError) {
+    
+    print("Error is \(errorMessage.localizedDescription)")
+  }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
