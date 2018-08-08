@@ -21,7 +21,6 @@ class ViewController: UIViewController, ListViewModeldelegate {
   override func viewDidLoad() {
     
     super.viewDidLoad()
-    
     listViewModel = ListViewModel()
     listViewModel.listViewModelDelegate = self
     listViewModel.getUserList()
@@ -41,7 +40,6 @@ class ViewController: UIViewController, ListViewModeldelegate {
   func sendResponse(responseObject:JSON) {
 
     if listViewModel.getCountOfUserList() > 0 {
-     
       configureListingTable()
       DispatchQueue.main.async {
         self.listTable.reloadData()
@@ -51,7 +49,6 @@ class ViewController: UIViewController, ListViewModeldelegate {
   }
   
   func sendError(errorMessage:NSError) {
-    
     print("Error is \(errorMessage.localizedDescription)")
   }
   

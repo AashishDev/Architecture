@@ -19,11 +19,7 @@ class ListTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-    //listViewModel = ListViewModel()
-    print(listViewModel)
     if listViewModel.getCountOfUserList() > 0 {
-      
-      print(listViewModel.getCountOfUserList())
       return listViewModel.getCountOfUserList()
     }
     return 0
@@ -32,7 +28,6 @@ class ListTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     let cell:UITableViewCell = (tableView.dequeueReusableCell(withIdentifier: "cell") as UITableViewCell?)!
-    //listViewModel = ListViewModel()
     user = listViewModel.getUserObjForIndex(index: indexPath.row)
     cell.textLabel?.text = user.name
     cell.detailTextLabel?.text = user.email
